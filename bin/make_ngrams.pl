@@ -71,14 +71,15 @@ my %config = (
   flankbreaks => 0,
   lowercase => 0,
   punctuation => 1,
+  spaces => 0,
 );
 
 
 open (my $fh, '<:encoding(utf8)', $ARGV[0]) or die "Couldn't open $ARGV[0] for input: $!\n";
 
 my @words = <$fh>;
-my $text = join('$', @words);
-$text = join('', '$', $text, '$');
+my $text = join('^ $', @words);
+$text = join('', '^', $text, '$');
 $ngrams = ngram_counts($text, $opts{n}, %config);
 
 use List::Util qw(max);
